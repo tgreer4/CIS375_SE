@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css"> <!--Link to CSS-->
+    <script src="main.js"></script>
+
+    <title>Add Pattern to Design Registry</title>
+</head>
+<body>
+    <header>
+        <h1 style="text-align: center;">Design Pattern Registry</h1>
+
+    <div class="searchBar">
+      <form action="#">
+          <input id="search" type="text" placeholder="Search.." name="search">
+          <i class="fas fa-times"></i>
+          <button type="submit">Submit</button>
+        </form>
+      </div>
+     <br>
+    <div class="topNav">
+      <ul class="topNav"> <!--Top Navigation-->
+        <li class="topNav"><a href="index.html">Home</a></li>
+        <li class="topNav"><a class="active" href="addPattern.html">Add Pattern</a></li>
+        <li class="topNav"><a href="patternList.html">Pattern list</a></li>
+        <li class="topNav"><a href="contact.html">Contact Us</a><li></li>
+      </ul>
+  </div>
+</header>
+    <hr>
+
+    <h2>Add Pattern to Design Registry</h2>
+<div class="addForm">
+  <h3>Personal Information</h3>
+    <form id="addPatternForm">
+        <label for="fName">First name:</label>
+        <input type="text" id="fName" name="fName" required>
+
+        <label for="lName">Last name:</label>
+        <input type="text" id="lName" name="lName" required>
+
+        <label for="compName">Company name:</label>
+        <input type="text" id="compName" name="compName">
+
+    <h3>Patttern Information</h3>
+      <label for="patternName">Pattern name:<em font-size="15px"> describes the essence of the pattern using an expressive name</em></label><br>
+      <input type="text" id="patternName" name="patternName" required> <br><br>
+
+        <label for="problem">Problem: <em font-size="15px">describes the problem that the pattern addresses
+        </em> </label><br>
+        <textarea type="text" id="problem" name="problem" required></textarea><br><br>
+
+        <label for="motivation">Motivation: <em font-size="15px">provides an example of the problem</em></label><br>
+        <textarea type="text" id="motivation" name="motivation" required> </textarea><br><br>
+
+        <label for="context">Context: <em font-size="15px">describes the environment in which the problem resides including application domain
+        </em></label><br>
+        <textarea type="text" id="context" name="context" required></textarea><br><br> 
+
+        <label for="forces">Forces: <em font-size="15px">lists the system of forces that affect the manner in which the problem must be solved; includes a discussion of limitation and constraints that must be considered
+        </em></label><br>
+        <textarea type="text" id="forces" name="forces" required></textarea><br><br>
+
+        <label for="solution">Solution: <em font-size="15px">provides a detailed description of the solution proposed for the problem (code not required)</em>
+        </label><br>
+        <textarea type="text" id="solution" name="solution" required></textarea><br><br>
+
+        <label for="intent">Intent: <em font-size="15px">describes the pattern and what it does
+        </em></label><br>
+        <textarea type="text" id="intent" name="intent" required></textarea><br><br>
+
+        <label for="collab">Collabortaions: <em font-size="15px">describes how other patterns contribute to the solution</em></label><br>
+        <textarea type="text" id="collabortaion" name="collabortaion" required></textarea><br><br>
+
+        <label for="conseq">Consequences: <em font-size="15px">describes the potential trade-offs that must be considered when the pattern is implemented and the consequences of using the pattern
+        </em></label><br>
+        <textarea type="text" id="consequences" name="consequences" required></textarea><br><br>
+
+        <label for="implement">Implementation: <em font-size="15px">identifies special issues that should be considered when implementing the pattern
+        </em></label><br>
+        <textarea type="text" id="implemenatation" name="implemenatation" required></textarea><br><br>
+
+        <label for="uses">Known Uses: <em font-size="15px">provides examples of actual uses of the design pattern in real apps
+        </em></label><br>
+        <textarea type="text" id="uses" name="uses" required></textarea><br><br>
+
+        <label for="relatePatt">Related Patterns: <em font-size="15px">cross-references related design patterns
+        </em></label><br>
+        <textarea type="text" id="relatePatt" name="relatePatt" required></textarea><br><br>
+
+        <button id="submit"type="button" >Submit</button>
+        <!--<input type="submit" value="Submit">-->
+    </form>
+  </div>
+    <hr>
+
+    <!--Sadness-->
+    <script type="module">
+      // Import the functions you need from the SDKs you need
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+      import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-analytics.js";
+      // TODO: Add SDKs for Firebase products that you want to use
+      // https://firebase.google.com/docs/web/setup#available-libraries
+    
+      // Your web app's Firebase configuration
+      // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+      let id = 0;
+      const firebaseConfig = {
+        apiKey: "AIzaSyCgOuzgshkSmcM-6fHlwmS5fFUbSlSO_Hg",
+        authDomain: "design-pattern-registry-ee990.firebaseapp.com",
+        databaseURL: "https://design-pattern-registry-ee990-default-rtdb.firebaseio.com",
+        projectId: "design-pattern-registry-ee990",
+        storageBucket: "design-pattern-registry-ee990.appspot.com",
+        messagingSenderId: "730667038424",
+        appId: "1:730667038424:web:71c0aef5ee3180211209ad",
+        measurementId: "G-EGC1CFVLM4"
+      };
+    
+      // Initialize Firebase
+      const app = initializeApp(firebaseConfig);
+      const analytics = getAnalytics(app);
+
+      import {getDatabase, ref, set, child, update, remove, push}
+      from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
+
+      const db = getDatabase();
+      const postListRef= ref(db, 'posts');
+
+      function writeData(){
+        const newPost=push(postListRef);
+        set(newPost, {
+          fName: document.getElementById("fName").value,
+          lName: document.getElementById("lName").value,
+          compName: document.getElementById("compName").value,
+          patternName: document.getElementById("patternName").value,
+          problem: document.getElementById("problem").value,
+          motivation: document.getElementById("motivation").value,
+          context: document.getElementById("context").value,
+          forces: document.getElementById("forces").value,
+          solution: document.getElementById("solution").value,
+          intent: document.getElementById("intent").value,
+          collab: document.getElementById("collabortaion").value,
+          conseq: document.getElementById("consequences").value,
+          implement:  document.getElementById("implemenatation").value,
+          knownUses: document.getElementById("uses").value,
+          relatePatt: document.getElementById("relatePatt").value
+          
+        })
+        .then(() =>{
+          alert("The data was stored");
+          
+        })
+        .catch((error)=>{
+          alert("Unsuccessful, error", error);
+        });
+
+      }
+      
+      document.getElementById("submit").addEventListener('click',writeData);
+    
+    </script>
+</body>
+
+<footer>
+  <div class="botNav"> <!--Bottom Navigation-->
+    <ul class="botNav"> 
+     <li class="botNav"><a class="active" href="index.html">Home</a></li>
+     <li class="botNav"><a href="addPattern.html">Add Pattern</a></li>
+      <li class="botNav"><a href="patternList.html">Pattern list</a></li>
+      <li class="botNav"><a href="contact.html">Contact Us</a><li></li>
+    </ul>
+  </div>
+</footer>
+</html>
